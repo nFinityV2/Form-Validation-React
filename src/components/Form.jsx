@@ -60,14 +60,13 @@ const RandomForm = () => {
 
   return (
     <div className="form-container">
-      <form action="" method="submit" onSubmit={validationForm}>
+      <form method="submit" onSubmit={validationForm}>
         <input
           className=""
           type="text"
           name="firstName"
           value={firstName}
           placeholder="First Name"
-          required
           onChange={(e) => setFirstName(e.target.value)}
         />
         <input
@@ -76,7 +75,6 @@ const RandomForm = () => {
           name="lastName"
           value={lastName}
           placeholder="Last Name"
-          required
           onChange={(e) => setLastName(e.target.value)}
         />
         <input
@@ -104,7 +102,7 @@ const RandomForm = () => {
           >
             Sign up!
           </button>
-          <ToastContainer autoClose={4500} limit={3}/>
+          <ToastContainer autoClose={4500} theme="colored" limit={3}/>
         </div>
       </form>
     </div>

@@ -1,14 +1,15 @@
-import Header from "./components/header"
+import Header from "./components/Header"
 import Form from "./components/Form"
+import './styles/app.css'
 
 function App() {
 
   return (
-    <>
+    <main className="main-container">
       <Header />
-      <Form/>
-    </>
+      <Form />
+    </main>
   )
 }
 
-export default App
+export default App;

@@ -1,0 +1,36 @@
+.form-container  {
+    width: 90%;
+    text-align: center;
+    margin: 1em auto;
+}
+
+input {
+    margin: 0.5em 0;
+    padding: 1em 2em;
+    background-color: initial;
+    border: none;
+    border-bottom: 2px solid var(--seashell);
+}
+
+input::placeholder {
+    font-weight: 700;
+    font-size: 1rem;
+    font-family: 'Nunito', sans-serif;
+    color: var(--seashell);
+}
+
+.submit {
+    margin: 1em 0;
+    padding: 0.5em 0 1.5em;
+}
+
+.submit button{
+    background-color: var(--imperial-red);
+    border: none;
+    border-radius: 25px;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--tangerine);
+    padding: 1em 2em;
+    width: 60%;
+}

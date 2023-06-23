@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+
+:root {
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+
+    /* Colour Palette */
+    --raisin-black: #1E1E24;
+    --jet: #444140;
+    --seashell: #F7EBE8;
+    --tangerine: #ffa987;
+    --imperial-red: #E54B4B;
+}
+
+body {
+    background-color: var(--jet);
+    color: var(--seashell);
+}
+
+.main-container {
+    background-color: var(--raisin-black);
+    border-radius: 15px;
+    box-shadow: 1px 2px 2px #1E1E24;
+}
