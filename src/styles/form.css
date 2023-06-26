@@ -12,11 +12,16 @@ input {
     border-bottom: 2px solid var(--seashell);
 }
 
-input::placeholder {
+input, input::placeholder {
     font-weight: 700;
     font-size: 1rem;
-    font-family: 'Nunito', sans-serif;
+    font-family: inherit;
     color: var(--seashell);
+}
+
+input:focus {
+    border-bottom: 2px solid var(--imperial-red);
+    outline: none;
 }
 
 .submit {
