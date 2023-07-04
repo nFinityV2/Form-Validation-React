@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-
+import Header from './Header'
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/form.css';
 
@@ -10,6 +10,7 @@ const RandomForm = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [submitted, setSubmitted] = useState(false)
  
   function validationForm(e) {
     e.preventDefault();
@@ -57,10 +58,16 @@ const RandomForm = () => {
         position: toast.POSITION.BOTTOM_CENTER
       });
     }
+    else {
+      setSubmitted(true)
+    }
   }
   
   return (
     <div className="form-container">
+      { !submitted && <Header/>}
+      {!submitted ? 
+      (
       <form method="submit" onSubmit={validationForm}>
         <input
           className=""
@@ -105,7 +112,12 @@ const RandomForm = () => {
           </button>
           <ToastContainer autoClose={4500} theme="colored" limit={3}/>
         </div>
-      </form>
+      </form>) : (
+        <section className="thanks">
+          <h1>Thank you!</h1>
+          <h2>Thanks for subscribing! Newsletters will be emailed to you fortnightly every Tuesday!</h2>
+        </section>
+      )}
     </div>
   );
 };

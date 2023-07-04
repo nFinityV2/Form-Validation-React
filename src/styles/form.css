@@ -41,8 +41,37 @@ input:focus {
     font-weight: 700;
     font-size: 1rem;
     color: var(--tangerine);
+    cursor: pointer;
     padding: 1em 2em;
     width: 60%;
+}
+
+.thanks {
+    text-align: center;
+    width: 85%;
+    margin: auto;
+    padding: 0.5em 0 1em;
+}
+
+.thanks h1 {
+    font-size: 2.35rem;
+    font-weight: 700;
+}
+
+.thanks h2 {
+    font-size: 1.25rem;
+}
+
+@media (min-width: 425px) {
+    .thanks {
+        width: 70%;
+    }
+}
+
+@media (min-width: 768px) {
+    .thanks {
+        max-width: 468px;
+    }
 }
 
 @media (min-width: 768px){
