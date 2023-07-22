@@ -5,6 +5,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../styles/form.css';
 
 const RandomForm = () => {
+  // Document Title
+  document.title = "Sign Up!"
+
   /* Form functions */
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -60,6 +63,8 @@ const RandomForm = () => {
     }
     else {
       setSubmitted(true)
+      document.title = 'Thanks!'
+      toast.success("Submitted!")
     }
   }
   
@@ -110,7 +115,7 @@ const RandomForm = () => {
           >
             Sign up!
           </button>
-          <ToastContainer autoClose={4500} theme="colored" limit={3}/>
+          <ToastContainer autoClose={4500} theme="colored" limit={3} />
         </div>
       </form>) : (
         <section className="thanks">
