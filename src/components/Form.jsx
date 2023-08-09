@@ -1,128 +1,145 @@
-import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import Header from './Header'
+import useValidation from "./useValidation";
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/form.css';
+import Thanks from "./Thanks";
+
+const validationForm = (values) => {
+  const errors = {}
+  const passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#%^&*?])[a-zA-Z0-9!@#$%^&*]{8,}$/;
+  const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+
+  // Validate First Name and Last Name
+  if (!values.firstName) {
+    errors.firstName = 'Please enter your first name.'
+  }
+  else if(values.firstName.length < 3){
+    errors.firstName = 'First name must 3 or more characters';
+  }
+
+  else if (!values.lastName) {
+    errors.lastName = 'Please enter your last name.'
+  }
+
+  else if(values.lastName.length < 3){
+    errors.lastName = 'Last name must be 3 or moe characters';
+  }
+
+  // Validate Email
+  else if(!values.email){
+    errors.email = "Invalid form, Email Address can not be empty";
+  }
+  else if(!emailRegex.test(values.email)){
+    errors.email = "Wrong email format. Must contain '@'";
+  }
+
+  // Validate Password
+  else if(!values.password){
+    errors.password = "Password cannot be empty";
+  }
+  else if(values.password.length < 8){
+    errors.password = "Invalid form, password must be greater than 8 characters";
+  }
+  else if(!passwordRegex.test(values.password)){
+    errors.password =  "Password must be contain 1 uppercase letter, 1 lowercase letter and 1 symbol.";
+  }
+
+  return errors;
+}
+
+const handleFormSubmission = (values, handleSubmit) => {
+  const validationErrors = validationForm(values);
+
+  if(Object.keys(validationErrors).length === 0){
+    handleSubmit();
+    document.title = 'Thanks'
+    toast.success('Submitted!')
+  } else {
+    Object.keys(validationErrors).forEach((field) => {
+      const errorMessage = validationErrors[field];
+      toast.error(errorMessage,{
+        position: toast.POSITION.BOTTOM_CENTER
+    })
+    })
+    
+  }
+}
+
 
 const RandomForm = () => {
   // Document Title
   document.title = "Sign Up!"
 
-  /* Form functions */
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [submitted, setSubmitted] = useState(false)
- 
-  function validationForm(e) {
-    e.preventDefault();
-    const passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#%^&*?])[a-zA-Z0-9!@#$%^&*]{8,}$/;
-    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-
-    // Validate First Name
-    if (firstName.length === 0) {
-      toast.error("Please enter your first name", {
-        position: toast.POSITION.BOTTOM_CENTER
-      });
-      return;
-    }
-
-    // Validate Last Name
-    else if (lastName.length === 0) {
-      toast.error("Please enter your last name", {
-        position: toast.POSITION.BOTTOM_CENTER
-      });
-      return;
-    }
-
-    // Validate Email
-    else if(email.length === 0){
-      toast.error("Invalid form, Email Address can not be empty", {
-        position: toast.POSITION.BOTTOM_CENTER
-      });
-      return;
-    }
-    else if(!emailRegex.test(email)){
-      toast.error("Invalid form, wrong email format. Must contain '@'", {
-        position: toast.POSITION.BOTTOM_CENTER
-      });
-    }
-
-    // Validate Password
-    else if(password.length < 8){
-      toast.error("Invalid form, password must be greater than 8 characters", {
-        position: toast.POSITION.BOTTOM_CENTER
-      });
-      return;
-    }
-    else if(!passwordRegex.test(password)){
-      toast.error("Password must be contain 1 uppercase letter, 1 lowercase letter and 1 symbol.", {
-        position: toast.POSITION.BOTTOM_CENTER
-      });
-    }
-    else {
-      setSubmitted(true)
-      document.title = 'Thanks!'
-      toast.success("Submitted!")
-    }
-  }
+  // Initialising the useValidation hook
+  const {
+    values,
+    errors, 
+    submitted, 
+    handleChange,
+    handleSubmit 
+  } = useValidation({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: ''
+  }, validationForm);
   
   return (
     <div className="form-container">
-      { !submitted && <Header/>}
+      {!submitted && <Header/>}
       {!submitted ? 
       (
-      <form method="submit" onSubmit={validationForm}>
+      <form onSubmit={(e) => {
+        e.preventDefault();
+        handleFormSubmission(values, handleSubmit)
+        }}>
         <input
           className=""
           type="text"
           name="firstName"
-          value={firstName}
+          value={values.firstName}
           placeholder="First Name"
-          onChange={(e) => setFirstName(e.target.value)}
+          onChange={handleChange}
         />
+        {errors.firstName && 
+        toast.error(errors.firstName)}
         <input
           className=""
           type="text"
           name="lastName"
-          value={lastName}
+          value={values.lastName}
           placeholder="Last Name"
-          onChange={(e) => setLastName(e.target.value)}
+          onChange={handleChange}
         />
+        {errors.lastName && toast.error(errors.lastName)}
         <input
           className=""
           type="email"
           name="email"
-          value={email}
+          value={values.email}
           placeholder="Email"
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={handleChange}
         />
+        {errors.email && toast.error(errors.email)}
         <input
           className=""
           type="password"
           name="password"
-          value={password}
+          value={values.password}
           placeholder="Password"
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={handleChange}
         />
+        {errors.password && toast.error(errors.password)}
         <div className="submit">
           <button
             type="submit"
-            onClick={() => {
-              validationForm();
-            }}
           >
             Sign up!
           </button>
           <ToastContainer autoClose={4500} theme="colored" limit={3} />
         </div>
-      </form>) : (
-        <section className="thanks">
-          <h1>Thank you!</h1>
-          <h2>Thanks for subscribing! Newsletters will be emailed to you fortnightly every Tuesday!</h2>
-        </section>
-      )}
+      </form>) : <Thanks/>}
     </div>
   );
 };
