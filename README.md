@@ -6,5 +6,8 @@ This was an opportunity to help reinforce the skills that I have picked up from 
 
 ## Contact me
 For any job opportunities or inquires:
+
+## Deployed solution ##
+
 **LinkedIn:** https://www.linkedin.com/in/nathan-k-soh/
 **Email:** nFinitySoh@hotmail.com
